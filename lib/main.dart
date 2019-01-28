@@ -13,16 +13,29 @@ class RandomEnglishWords extends StatefulWidget {
 }
 //State
 class RandomEnglishWordsState extends State<RandomEnglishWords> {
+  final _words = <WordPair>[]; // Words displayed in ListView, 1 row contains 1 word
   @override
   Widget build(BuildContext context) {
     //TODO: implement build
     final wordPair = new WordPair.random();
-    return new Text(
-        wordPair.asUpperCase,
-        style: new TextStyle(fontSize: 20.0)
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("List of English words"),
+      ),
+      body: new ListView.builder(itemBuilder: (context, index) {
+        return _buildRow(_words[index]); // Wher is _buildRow ?
+      })
     );
   }
-}
+  Widget _buildRow(WordPair wordPair) {
+    return new ListTile(
+      title: new Text(
+        wordPair.asUpperCase,
+        style: new TextStyle(fontSize: 18.0, color: Colors.red),
+      ),
+    );
+  }
+
 class MyApp extends StatelessWidget {
   // Stateless = immutable = cannot change object's properties
   // Every UI components are widgets
@@ -31,14 +44,7 @@ class MyApp extends StatelessWidget {
     // Build function returns a "Widget"
     return new MaterialApp(
       title: "THis is my first Flutter app",
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text("This is Header's title")
-        ),
-        body: new Center(
-          child: new RandomEnglishWords()
-        ),
-      ),
+      home: new RandomEnglishWords()
     );
   }
 }
